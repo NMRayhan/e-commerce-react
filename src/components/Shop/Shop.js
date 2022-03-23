@@ -15,11 +15,7 @@ const Shop = () => {
       .then((data) => setProducts(data));
   }, []);
 
-  const handleAddToCart = (product) => {
-    const newCart = [...cart, product];
-    setCart(newCart);
-    console.log(cart);
-  };
+  // const handleAddToCart = (product) => setCart([...cart, product]);
 
   const totalPrice = getTotalPrice(cart);
   const totalShippingCharge = getShipping(cart);
@@ -35,7 +31,7 @@ const Shop = () => {
             <Product
               product={pd}
               key={pd.id}
-              handleAddToCart={handleAddToCart}
+              handleAddToCart={(product) => setCart([...cart, product])}
             />
           ))}
         </div>
