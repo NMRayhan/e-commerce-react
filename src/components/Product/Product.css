@@ -1,0 +1,47 @@
+.cart {
+  width: 310px;
+  height: max-content;
+  border-radius: 15px;
+  box-sizing: border-box;
+  box-shadow: inset 0px 4px 10px #c3c9cd;
+  height: 600px;
+  position: relative;
+}
+
+.cart-body,
+.cart-img {
+  padding: 14px;
+}
+.cart .cart-img img {
+  width: 100%;
+  border-radius: 15px;
+}
+
+.cart-footer{
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
+
+.cart-footer button{
+  height: 50px;
+  width: 100%;
+  background-color: #FFE0B3;
+  border-radius: 0px 0px 15px 15px;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  font-size: 1.3em;
+  color: black;
+  
+}
+
+button:hover{
+    background-color: orange;
+    color: white;
+    transition: .25s;
+}
+
+.icon{
+  color: white;
+}
