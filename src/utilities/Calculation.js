@@ -8,10 +8,8 @@ const getShipping = (product) => {
     return total;
 }
 
-const getTexCalculation = (total, shipping) =>{
-    const textTotal = total + shipping;
-    const tex = textTotal*.15;
-    return Math.floor(tex);
+const getTexCalculation = (total) =>{
+    return (total * .1).toFixed(2);
 }
 
 const getTotalGrandPrice = (total, shipping, tex) =>{

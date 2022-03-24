@@ -1,8 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { getShipping, getTexCalculation, getTotalGrandPrice, getTotalPrice } from "../../utilities/Calculation";
+import {
+  getShipping,
+  getTexCalculation,
+  getTotalGrandPrice,
+  getTotalPrice,
+} from "../../utilities/Calculation";
 import Product from "../Product/Product";
 import "./Shop.css";
 import Cart from "../Cart/Cart";
+import { addToDb, getStoredCart } from "../../utilities/fakedb";
 
 const Shop = () => {
   const [Products, setProducts] = useState([]);
@@ -11,16 +18,35 @@ const Shop = () => {
   useEffect(() => {
     fetch("products.json")
       .then((response) => response.json())
-      .then((data) => setProducts(data));
+      .then((data) => {
+        setProducts(data);
+      });
   }, []);
 
-  // const handleAddToCart = (product) => setCart([...cart, product]);
+  useEffect(() => {
+    const storeCart = getStoredCart();
+    const cartProduct=[];
+    for (const id in storeCart) {
+      const addedProduct = Products.find((pd) => pd.id === id);
+      if (addedProduct) {
+        const quantity = storeCart[id];
+        addedProduct.quantity = quantity;
+        cartProduct.push(addedProduct);
+      }
+    }
+    setCart(cartProduct);
+  }, [Products]);
+
+  const handleAddToCart = (product) => {
+    const newCart = [...cart, product];
+    setCart(newCart);
+    addToDb(product.id);
+  };
 
   const totalPrice = getTotalPrice(cart);
   const totalShippingCharge = getShipping(cart);
-  const Tex = getTexCalculation(totalPrice, totalShippingCharge);
-  const total = getTotalGrandPrice(totalPrice, totalShippingCharge, Tex) ;
-
+  const Tex = getTexCalculation(totalPrice);
+  const total = getTotalGrandPrice(totalPrice, totalShippingCharge, +Tex);
 
   return (
     <div>
@@ -30,12 +56,14 @@ const Shop = () => {
             <Product
               product={pd}
               key={pd.id}
-              handleAddToCart={(product) => setCart([...cart, product])}
+              handleAddToCart={(product) => handleAddToCart(product)}
             />
           ))}
         </div>
         <div>
-          <Cart details={[totalPrice, totalShippingCharge, Tex, total, cart]}></Cart>
+          <Cart
+            details={[totalPrice, totalShippingCharge, Tex, total, cart]}
+          />
         </div>
       </div>
     </div>

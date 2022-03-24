@@ -1,19 +1,23 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faTrashCan, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import "./Cart.css";
 
 const Cart = (props) => {
+  console.log(props.details[4]);
 
-   const [totalPrice, totalShippingCharge, Tex, total, cart]  =  props.details
-
+  const [totalPrice, totalShippingCharge, Tex, total, cart] = props.details;
+  let quantity = 0;
+  for (const item of cart) {
+    quantity = quantity + item.quantity;
+  }
   return (
     <div>
       <div className="shoppingCart-container">
         <h1 className="header-1">Order Summary</h1>
         <div className="shoppingCart-details">
           <p>
-            Total Item : <span className="bold-text">{cart.length}</span>{" "}
+            Total Item : <span className="bold-text">{quantity}</span>{" "}
           </p>
           <p>
             Total Price : $<span className="bold-text">{totalPrice}</span>{" "}
